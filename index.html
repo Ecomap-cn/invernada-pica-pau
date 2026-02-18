@@ -401,6 +401,33 @@
 /* esconder o mapa até autenticar */
 body.ecomap-locked #map{ display:none; }
 
+
+/* ===== Logos Empilhados EcoMap + L&S ===== */
+.ecomap-logos-wrapper{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:8px;
+}
+
+.logo-parceiro{
+    height:84px;
+    width:auto;
+    opacity:0.95;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+}
+
+.logo-ecomap{
+    height:92px;
+    width:auto;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+}
+
+@media (max-width: 600px){
+    .logo-parceiro{ height:48px; }
+    .logo-ecomap{ height:40px; }
+}
+
 </style>
         
     
@@ -470,8 +497,11 @@ body.ecomap-locked #map{ display:none; }
         <div id="ecomapHint" class="ecomap-hint" style="display:none;"></div>
 
 <!-- EcoMap overlays -->
-        <div class="ecomap-float ecomap-logo" aria-label="EcoMap">
-            <img src="images/ecomap_logo%201.png" alt="EcoMap Logo">
+        <div class="ecomap-float ecomap-logo" aria-label="Parceiros">
+            <div class="ecomap-logos-wrapper">
+                <img src="images/lsagrodrone.png" alt="L&S Agrodrone Logo" class="logo-parceiro">
+                <img src="images/ecomap_logo%201.png" alt="EcoMap Logo" class="logo-ecomap">
+            </div>
         </div>
         <div class="ecomap-float ecomap-title" aria-label="Título do Projeto">
             <div class="t1">Fazenda Invernada do Pica Pau</div>
@@ -1901,7 +1931,34 @@ try{
             .ecomap-table-panel{ bottom: 76px; left: 56px; width: calc(100vw - 80px); max-height: 24vh; }
         }
 
-        </style>
+        
+/* ===== Logos Empilhados EcoMap + L&S ===== */
+.ecomap-logos-wrapper{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:8px;
+}
+
+.logo-parceiro{
+    height:84px;
+    width:auto;
+    opacity:0.95;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+}
+
+.logo-ecomap{
+    height:92px;
+    width:auto;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35));
+}
+
+@media (max-width: 600px){
+    .logo-parceiro{ height:48px; }
+    .logo-ecomap{ height:40px; }
+}
+
+</style>
 
 <meta name="description" content="Mapa interativo EcoMap - Fazenda Invernada do Pica Pau - São Joaquim/SC - Data do Voo: 13/02/2026">
 
