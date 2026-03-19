@@ -428,6 +428,27 @@ body.ecomap-locked #map{ display:none; }
     .logo-ecomap{ height:40px; }
 }
 
+/* Rótulos dos talhões */
+.talhoes-label.leaflet-tooltip {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #2f2f2f;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 0;
+    text-shadow:
+        -1px -1px 0 #ffffff,
+         1px -1px 0 #ffffff,
+        -1px  1px 0 #ffffff,
+         1px  1px 0 #ffffff,
+         0 0 3px #ffffff,
+         0 0 5px #ffffff;
+}
+.talhoes-label.leaflet-tooltip:before {
+    display: none;
+}
+
 </style>
         
     
@@ -678,6 +699,7 @@ body.ecomap-locked #map{ display:none; }
         <script src="data/Estradas_25.js"></script>
         <script src="data/reatil_26.js"></script>
         <script src="data/LimitesdaPropriedade_27.js"></script>
+        <script src="data/Talhoes.js"></script>
         <script>
                 if (window.ECOMAP_SKIP_INIT) {
             // Mapa bloqueado até autenticação
@@ -1825,6 +1847,10 @@ try{
     .obs{ max-width: 860px; margin-top: 14px; font-size: 13px; line-height: 1.45; }
     .obs b{ display:block; margin-bottom: 6px; }
     .note{ margin-top: 10px; padding:10px; background:#f7f7f7; border-left:4px solid #2d6a4f; }
+    .sec-title{ font-size:16px; font-weight:700; margin:22px 0 10px 0; }
+    .talhoes-table{ max-width: 520px; }
+    .talhoes-table th:nth-child(1), .talhoes-table td:nth-child(1){ width: 40%; }
+    .talhoes-table th:nth-child(2), .talhoes-table td:nth-child(2){ width: 60%; }
 
         /* EcoMap tools (Etapa 2) */
         .ecomap-tools.leaflet-bar a{
@@ -1958,6 +1984,27 @@ try{
     .logo-ecomap{ height:40px; }
 }
 
+/* Rótulos dos talhões */
+.talhoes-label.leaflet-tooltip {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #2f2f2f;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 0;
+    text-shadow:
+        -1px -1px 0 #ffffff,
+         1px -1px 0 #ffffff,
+        -1px  1px 0 #ffffff,
+         1px  1px 0 #ffffff,
+         0 0 3px #ffffff,
+         0 0 5px #ffffff;
+}
+.talhoes-label.leaflet-tooltip:before {
+    display: none;
+}
+
 </style>
 
 <meta name="description" content="Mapa interativo EcoMap - Fazenda Invernada do Pica Pau - São Joaquim/SC - Data do Voo: 13/02/2026">
@@ -1994,6 +2041,38 @@ try{
             <tr class="hl"><td>Área Oficial da Matrícula</td><td class="num">323,83</td><td class="num">100,0%</td></tr>
             <tr><td>Sobreposições</td><td class="num">-0,74</td><td class="num">-0,2%</td></tr>
             <tr><td>Área antropizada dentro de APP's</td><td class="num">8,84</td><td class="num">2,7%</td></tr>
+        </tbody>
+    </table>
+
+    <div class="sec-title">ÁREAS DOS TALHÕES</div>
+    <table class="talhoes-table">
+        <thead>
+            <tr>
+                <th>Talhão</th>
+                <th class="num">Área (ha)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>T001</td><td class="num">3,532</td></tr>
+            <tr><td>T002</td><td class="num">3,493</td></tr>
+            <tr><td>T003</td><td class="num">3,113</td></tr>
+            <tr><td>T004</td><td class="num">10,496</td></tr>
+            <tr><td>T005</td><td class="num">3,032</td></tr>
+            <tr><td>T006</td><td class="num">4,431</td></tr>
+            <tr><td>T007</td><td class="num">5,907</td></tr>
+            <tr><td>T008</td><td class="num">0,207</td></tr>
+            <tr><td>T009</td><td class="num">8,650</td></tr>
+            <tr><td>T010</td><td class="num">15,457</td></tr>
+            <tr><td>T011</td><td class="num">33,228</td></tr>
+            <tr><td>T012</td><td class="num">11,875</td></tr>
+            <tr><td>T013</td><td class="num">20,041</td></tr>
+            <tr><td>T014</td><td class="num">9,391</td></tr>
+            <tr><td>T015</td><td class="num">6,964</td></tr>
+            <tr><td>T016</td><td class="num">7,075</td></tr>
+            <tr><td>T017</td><td class="num">1,991</td></tr>
+            <tr><td>T018</td><td class="num">3,370</td></tr>
+            <tr><td>T019</td><td class="num">6,657</td></tr>
+            <tr class="hl"><td>Total</td><td class="num">158,910</td></tr>
         </tbody>
     </table>
 
@@ -2612,36 +2691,102 @@ function style_reatil_26_1() {
         });
         bounds_group.addLayer(layer_LimitesdaPropriedade_27);
         map.addLayer(layer_LimitesdaPropriedade_27);
+function pop_Talhoes(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Talhão</th>\
+                        <td>' + (feature.properties['Talhão'] !== null ? autolinker.link(String(feature.properties['Talhão']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Área (ha)</th>\
+                        <td>' + (feature.properties['area_ha'] !== null ? autolinker.link(String(feature.properties['area_ha']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+            layer.on('popupopen', function(e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 400 });
+            var rotuloTalhao = feature && feature.properties ? feature.properties['Talhão'] : null;
+            if (rotuloTalhao !== null && rotuloTalhao !== undefined && String(rotuloTalhao).trim() !== '') {
+                layer.bindTooltip(String(rotuloTalhao), {
+                    permanent: true,
+                    direction: 'center',
+                    className: 'talhoes-label'
+                });
+            }
+        }
+
+        function style_Talhoes_0() {
+            return {
+                pane: 'pane_Talhoes',
+                opacity: 1,
+                color: 'rgba(255,170,0,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 0.18,
+                fillColor: 'rgba(255,170,0,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Talhoes');
+        map.getPane('pane_Talhoes').style.zIndex = 428;
+        map.getPane('pane_Talhoes').style['mix-blend-mode'] = 'normal';
+        var layer_Talhoes = new L.geoJson(json_Talhoes, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Talhoes',
+            layerName: 'layer_Talhoes',
+            pane: 'pane_Talhoes',
+            onEachFeature: pop_Talhoes,
+            style: style_Talhoes_0,
+        });
+        bounds_group.addLayer(layer_Talhoes);
+        map.addLayer(layer_LimitesdaPropriedade_27);
+        map.addLayer(layer_Talhoes);
         var overlaysTree = [
             {label: '<img src="legend/LimitesdaPropriedade_27.png" /> Limites da Propriedade', layer: layer_LimitesdaPropriedade_27},
-            {label: '<img src="legend/reatil_26.png" /> Área Útil', layer: layer_reatil_26},
-            {label: '<img src="legend/Estradas_25.png" /> Estradas', layer: layer_Estradas_25},
-            {label: '<img src="legend/APP_24.png" /> APP', layer: layer_APP_24},
-            {label: '<img src="legend/ARARecuperao_23.png" /> ARA - Recuperação', layer: layer_ARARecuperao_23},
-            {label: '<img src="legend/FaixadeServidoRedeEltrica_22.png" /> Faixa de Servidão - Rede Elétrica', layer: layer_FaixadeServidoRedeEltrica_22},
-            {label: '<img src="legend/RemanescentedeVegetaoNativa_21.png" /> Remanescente de Vegetação Nativa', layer: layer_RemanescentedeVegetaoNativa_21},
-            {label: '<img src="legend/LinhadeTransmisso_20.png" /> Linha de Transmissão', layer: layer_LinhadeTransmisso_20},
-        {label: '<b>Ortomosaico</b>', collapsed: true, selectAllCheckbox: true, children: [
-            {label: "orto-3-1", layer: layer_orto31_19},
-            {label: "orto-3-0", layer: layer_orto30_18},
-            {label: "orto-2-4", layer: layer_orto24_17},
-            {label: "orto-2-3", layer: layer_orto23_16},
-            {label: "orto-2-2", layer: layer_orto22_15},
-            {label: "orto-2-1", layer: layer_orto21_14},
-            {label: "orto-2-0", layer: layer_orto20_13},
-            {label: "orto-1-5", layer: layer_orto15_12},
-            {label: "orto-1-4", layer: layer_orto14_11},
-            {label: "orto-1-3", layer: layer_orto13_10},
-            {label: "orto-1-2", layer: layer_orto12_9},
-            {label: "orto-1-1", layer: layer_orto11_8},
-            {label: "orto-1-0", layer: layer_orto10_7},
-            {label: "orto-0-5", layer: layer_orto05_6},
-            {label: "orto-0-4", layer: layer_orto04_5},
-            {label: "orto-0-3", layer: layer_orto03_4},
-            {label: "orto-0-2", layer: layer_orto02_3},
-            {label: "orto-0-1", layer: layer_orto01_2},
-            {label: "orto-0-0", layer: layer_orto00_1},]},
-            {label: "Google Satellite", layer: layer_GoogleSatellite_0},]
+            {label: 'Uso do Solo', collapsed: true, selectAllCheckbox: true, children: [
+                {label: '<img src="legend/reatil_26.png" /> Área Útil', layer: layer_reatil_26},
+                {label: '<img src="legend/Estradas_25.png" /> Estradas', layer: layer_Estradas_25},
+                {label: '<img src="legend/APP_24.png" /> APP', layer: layer_APP_24},
+                {label: '<img src="legend/ARARecuperao_23.png" /> ARA - Recuperação', layer: layer_ARARecuperao_23},
+                {label: '<img src="legend/FaixadeServidoRedeEltrica_22.png" /> Faixa de Servidão - Rede Elétrica', layer: layer_FaixadeServidoRedeEltrica_22},
+                {label: '<img src="legend/RemanescentedeVegetaoNativa_21.png" /> Remanescente de Vegetação Nativa', layer: layer_RemanescentedeVegetaoNativa_21},
+                {label: '<img src="legend/LinhadeTransmisso_20.png" /> Linha de Transmissão', layer: layer_LinhadeTransmisso_20}
+            ]},
+            {label: '<span style="display:inline-block;width:12px;height:12px;background:rgba(255,170,0,0.18);border:2px solid rgba(255,170,0,1.0);box-sizing:border-box;vertical-align:middle;margin-right:4px;"></span> Talhões', layer: layer_Talhoes},
+            {label: '<b>Ortomosaico</b>', collapsed: true, selectAllCheckbox: true, children: [
+                {label: "orto-3-1", layer: layer_orto31_19},
+                {label: "orto-3-0", layer: layer_orto30_18},
+                {label: "orto-2-4", layer: layer_orto24_17},
+                {label: "orto-2-3", layer: layer_orto23_16},
+                {label: "orto-2-2", layer: layer_orto22_15},
+                {label: "orto-2-1", layer: layer_orto21_14},
+                {label: "orto-2-0", layer: layer_orto20_13},
+                {label: "orto-1-5", layer: layer_orto15_12},
+                {label: "orto-1-4", layer: layer_orto14_11},
+                {label: "orto-1-3", layer: layer_orto13_10},
+                {label: "orto-1-2", layer: layer_orto12_9},
+                {label: "orto-1-1", layer: layer_orto11_8},
+                {label: "orto-1-0", layer: layer_orto10_7},
+                {label: "orto-0-5", layer: layer_orto05_6},
+                {label: "orto-0-4", layer: layer_orto04_5},
+                {label: "orto-0-3", layer: layer_orto03_4},
+                {label: "orto-0-2", layer: layer_orto02_3},
+                {label: "orto-0-1", layer: layer_orto01_2},
+                {label: "orto-0-0", layer: layer_orto00_1}
+            ]},
+            {label: "Google Satellite", layer: layer_GoogleSatellite_0},
+            {label: 'Documentos para Download', collapsed: true, selectAllCheckbox: false, children: [
+                {label: 'Mapas', collapsed: true, selectAllCheckbox: false, children: [
+                    {label: '<a href="docs/mapas_download/Invernada_do_Pica_Pau_Talhoes_Pinus_A1.pdf" target="_blank">📄 Invernada do Pica Pau - Talhões Pinus A1</a>'}
+                ]}
+            ]}
+        ];
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
             //selectorBack: false,
