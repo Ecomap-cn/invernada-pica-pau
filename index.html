@@ -2045,36 +2045,48 @@ try{
     </table>
 
     <div class="sec-title">ÁREAS DOS TALHÕES</div>
-    <table class="talhoes-table">
-        <thead>
-            <tr>
-                <th>Talhão</th>
-                <th class="num">Área (ha)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>T001</td><td class="num">3,532</td></tr>
-            <tr><td>T002</td><td class="num">3,493</td></tr>
-            <tr><td>T003</td><td class="num">3,113</td></tr>
-            <tr><td>T004</td><td class="num">10,496</td></tr>
-            <tr><td>T005</td><td class="num">3,032</td></tr>
-            <tr><td>T006</td><td class="num">4,431</td></tr>
-            <tr><td>T007</td><td class="num">5,907</td></tr>
-            <tr><td>T008</td><td class="num">0,207</td></tr>
-            <tr><td>T009</td><td class="num">8,650</td></tr>
-            <tr><td>T010</td><td class="num">15,457</td></tr>
-            <tr><td>T011</td><td class="num">33,228</td></tr>
-            <tr><td>T012</td><td class="num">11,875</td></tr>
-            <tr><td>T013</td><td class="num">20,041</td></tr>
-            <tr><td>T014</td><td class="num">9,391</td></tr>
-            <tr><td>T015</td><td class="num">6,964</td></tr>
-            <tr><td>T016</td><td class="num">7,075</td></tr>
-            <tr><td>T017</td><td class="num">1,991</td></tr>
-            <tr><td>T018</td><td class="num">3,370</td></tr>
-            <tr><td>T019</td><td class="num">6,657</td></tr>
-            <tr class="hl"><td>Total</td><td class="num">158,910</td></tr>
-        </tbody>
-    </table>
+    <div style="display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap;">
+        <table class="talhoes-table" style="min-width:450px;">
+            <thead>
+                <tr>
+                    <th>Talhão</th>
+                    <th class="num">Área (ha)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>T001</td><td class="num">3,532</td></tr>
+                <tr><td>T002</td><td class="num">3,032</td></tr>
+                <tr><td>T003</td><td class="num">4,431</td></tr>
+                <tr><td>T004</td><td class="num">0,207</td></tr>
+                <tr><td>T005</td><td class="num">11,104</td></tr>
+                <tr><td>T006</td><td class="num">3,501</td></tr>
+                <tr><td>T007</td><td class="num">9,512</td></tr>
+                <tr><td>T008</td><td class="num">16,620</td></tr>
+                <tr><td>T009</td><td class="num">6,021</td></tr>
+                <tr><td>T010</td><td class="num">12,074</td></tr>
+                <tr><td>T011</td><td class="num">20,283</td></tr>
+                <tr><td>T012</td><td class="num">10,511</td></tr>
+                <tr><td>T013</td><td class="num">7,347</td></tr>
+                <tr><td>T014</td><td class="num">7,220</td></tr>
+                <tr><td>T015</td><td class="num">39,793</td></tr>
+                <tr><td>T016</td><td class="num">11,173</td></tr>
+                <tr class="hl"><td>Total</td><td class="num">166,361</td></tr>
+            </tbody>
+        </table>
+
+        <table class="talhoes-table" style="width:280px;">
+            <thead>
+                <tr>
+                    <th colspan="2">RESUMO DE PLANTIO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Plantados (T001 a T007)</td><td class="num">35,319</td></tr>
+                <tr><td>A plantar (T008 a T016)</td><td class="num">131,042</td></tr>
+                <tr class="hl"><td>Total</td><td class="num">166,361</td></tr>
+            </tbody>
+        </table>
+    </div>
 
     <div class="obs">
         <b>Observações:</b>
@@ -2691,49 +2703,238 @@ function style_reatil_26_1() {
         });
         bounds_group.addLayer(layer_LimitesdaPropriedade_27);
         map.addLayer(layer_LimitesdaPropriedade_27);
-function pop_Talhoes(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <th scope="row">Talhão</th>\
-                        <td>' + (feature.properties['Talhão'] !== null ? autolinker.link(String(feature.properties['Talhão']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Área (ha)</th>\
-                        <td>' + (feature.properties['area_ha'] !== null ? autolinker.link(String(feature.properties['area_ha']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
+var talhoesLabelsLayer = L.layerGroup();
+var talhaoLabelOccurrenceCount = {};
+var talhoesLabelEntries = [];
+
+        function getTalhaoManualLabelShift(nomeTalhao, occurrence) {
+            var key = String(nomeTalhao || '').trim() + '#' + String(occurrence || 1);
+            var shifts = {
+                'T003#1': { lng: 0.00062, lat: 0.00002 },
+                'T004#1': { lng: 0.00000, lat: -0.00016 },
+                'T007#1': { lng: -0.00062, lat: 0.00002 },
+                'T008#1': { lng: -0.00072, lat: 0.00004 },
+                'T013#1': { lng: -0.00042, lat: 0.00000 },
+                'T013#2': { lng: -0.00030, lat: 0.00024 },
+                'T014#1': { lng: -0.00028, lat: 0.00000 },
+                'T015#1': { lng: -0.00115, lat: 0.00002 },
+                'T016#1': { lng: -0.00042, lat: -0.00022 }
+            };
+            return shifts[key] || null;
+        }
+
+        function applyTalhaoManualLabelShift(latlng, nomeTalhao, occurrence) {
+            var shift = getTalhaoManualLabelShift(nomeTalhao, occurrence);
+            if (!latlng || !shift) return latlng;
+            return [latlng[0] + (shift.lat || 0), latlng[1] + (shift.lng || 0)];
+        }
+
+        function getTalhaoFeatureCenterLatLng(feature) {
+            try {
+                if (typeof turf !== 'undefined' && turf.pointOnFeature) {
+                    var pt = turf.pointOnFeature(feature);
+                    if (pt && pt.geometry && pt.geometry.coordinates) {
+                        return [pt.geometry.coordinates[1], pt.geometry.coordinates[0]];
+                    }
+                }
+            } catch (e) {}
+            try {
+                var temp = L.geoJson(feature);
+                var bounds = temp.getBounds();
+                if (bounds && bounds.isValid()) {
+                    var c = bounds.getCenter();
+                    return [c.lat, c.lng];
+                }
+            } catch (e) {}
+            return null;
+        }
+
+        function getTalhaoVisibleCenterLatLng(feature) {
+            try {
+                if (typeof turf === 'undefined' || !turf.bboxPolygon || !turf.intersect || !turf.pointOnFeature) {
+                    return null;
+                }
+                var b = map.getBounds();
+                var bboxPoly = turf.bboxPolygon([b.getWest(), b.getSouth(), b.getEast(), b.getNorth()]);
+                var clipped = turf.intersect(feature, bboxPoly);
+                if (clipped && clipped.geometry) {
+                    var pt = turf.pointOnFeature(clipped);
+                    if (pt && pt.geometry && pt.geometry.coordinates) {
+                        return [pt.geometry.coordinates[1], pt.geometry.coordinates[0]];
+                    }
+                }
+            } catch (e) {}
+            return null;
+        }
+
+        function isLatLngInsideTalhao(feature, latlng) {
+            try {
+                if (!feature || !latlng || typeof turf === 'undefined' || !turf.point || !turf.booleanPointInPolygon) {
+                    return false;
+                }
+                var pt = turf.point([latlng[1], latlng[0]]);
+                return turf.booleanPointInPolygon(pt, feature);
+            } catch (e) {}
+            return false;
+        }
+
+        function getTalhaoLabelLatLng(feature, occurrence) {
+            var nomeTalhao = feature && feature.properties ? feature.properties['Talhoes'] : null;
+            var baseLatLng = getTalhaoFeatureCenterLatLng(feature);
+            var shiftedLatLng = applyTalhaoManualLabelShift(baseLatLng, nomeTalhao, occurrence);
+
+            if (shiftedLatLng && isLatLngInsideTalhao(feature, shiftedLatLng)) {
+                return shiftedLatLng;
+            }
+
+            return baseLatLng;
+        }
+
+        function updateTalhoesLabelsPositions() {
+            if (!map || !talhoesLabelEntries || !talhoesLabelEntries.length) return;
+            talhoesLabelEntries.forEach(function(entry) {
+                try {
+                    var latlng = getTalhaoLabelLatLng(entry.feature, entry.occurrence);
+                    if (latlng && entry.marker) {
+                        entry.marker.setLatLng(latlng);
+                    }
+                } catch (e) {}
+            });
+        }
+
+        function pop_Talhoes(feature, layer) {
+            var nomeTalhao = feature && feature.properties ? feature.properties['Talhoes'] : null;
+            var areaTalhao = feature && feature.properties ? feature.properties['area_ha'] : null;
+            var popupContent = '<table>' +
+                    '<tr>' +
+                        '<th scope="row">Talhão</th>' +
+                        '<td>' + (nomeTalhao !== null && nomeTalhao !== undefined ? autolinker.link(String(nomeTalhao).replace(/'/g, '\'').toLocaleString()) : '') + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<th scope="row">Área (ha)</th>' +
+                        '<td>' + (areaTalhao !== null && areaTalhao !== undefined ? autolinker.link(Number(areaTalhao).toLocaleString('pt-BR', {minimumFractionDigits: 3, maximumFractionDigits: 3})) : '') + '</td>' +
+                    '</tr>' +
+                '</table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
             layer.on('popupopen', function(e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
             layer.bindPopup(content, { maxHeight: 400 });
-            var rotuloTalhao = feature && feature.properties ? feature.properties['Talhão'] : null;
-            if (rotuloTalhao !== null && rotuloTalhao !== undefined && String(rotuloTalhao).trim() !== '') {
-                layer.bindTooltip(String(rotuloTalhao), {
-                    permanent: true,
-                    direction: 'center',
-                    className: 'talhoes-label'
-                });
+
+            if (nomeTalhao !== null && nomeTalhao !== undefined && String(nomeTalhao).trim() !== '') {
+                var nomeTalhaoKey = String(nomeTalhao).trim();
+                talhaoLabelOccurrenceCount[nomeTalhaoKey] = (talhaoLabelOccurrenceCount[nomeTalhaoKey] || 0) + 1;
+                var labelLatLng = getTalhaoLabelLatLng(feature, talhaoLabelOccurrenceCount[nomeTalhaoKey]);
+                if (labelLatLng) {
+                    var labelMarker = L.marker(labelLatLng, {
+                        interactive: false,
+                        keyboard: false,
+                        opacity: 0
+                    });
+                    labelMarker.bindTooltip(String(nomeTalhao), {
+                        permanent: true,
+                        direction: 'center',
+                        className: 'talhoes-label',
+                        offset: [0, 0]
+                    });
+                    talhoesLabelsLayer.addLayer(labelMarker);
+                    talhoesLabelEntries.push({
+                        nomeTalhao: nomeTalhaoKey,
+                        occurrence: talhaoLabelOccurrenceCount[nomeTalhaoKey],
+                        feature: feature,
+                        marker: labelMarker
+                    });
+                }
             }
         }
 
-        function style_Talhoes_0() {
+        function getTalhaoNumber(nome) {
+            if (nome === null || nome === undefined) return NaN;
+            var match = String(nome).match(/(\d+)/);
+            return match ? parseInt(match[1], 10) : NaN;
+        }
+
+        function isTalhaoGrupoVerde(nome) {
+            var n = getTalhaoNumber(nome);
+            return !isNaN(n) && n >= 1 && n <= 7;
+        }
+
+        function createTalhaoPattern(options) {
+            var pattern = new L.Pattern({
+                width: 22,
+                height: 22,
+                x: 0,
+                y: 0,
+                patternUnits: 'userSpaceOnUse'
+            });
+
+            pattern.addShape(new L.PatternRect({
+                x: 0,
+                y: 0,
+                width: 22,
+                height: 22,
+                stroke: false,
+                fill: true,
+                fillColor: options.background,
+                fillOpacity: 1
+            }));
+
+            pattern.addShape(new L.PatternRect({
+                x: 10,
+                y: 12.5,
+                width: 2,
+                height: 5,
+                stroke: false,
+                fill: true,
+                fillColor: options.tree,
+                fillOpacity: 1
+            }));
+
+            pattern.addShape(new L.PatternPath({
+                d: 'M 11 4 L 6.5 13 L 15.5 13 Z',
+                stroke: options.outline ? true : false,
+                color: options.outline || options.tree,
+                weight: options.outline ? 0.7 : 0,
+                fill: true,
+                fillColor: options.tree,
+                fillOpacity: 1
+            }));
+
+            pattern.addTo(map);
+            return pattern;
+        }
+
+        var talhaoPatternVerde = createTalhaoPattern({
+            background: '#43d13f',
+            tree: '#d4d66a',
+            outline: null
+        });
+
+        var talhaoPatternLaranja = createTalhaoPattern({
+            background: '#e57c2b',
+            tree: '#7bd05a',
+            outline: '#2f7f2f'
+        });
+
+        function style_Talhoes_0(feature) {
+            var nomeTalhao = feature && feature.properties ? feature.properties['Talhoes'] : null;
             return {
                 pane: 'pane_Talhoes',
                 opacity: 1,
-                color: 'rgba(255,170,0,1.0)',
+                color: '#000000',
                 dashArray: '',
                 lineCap: 'round',
                 lineJoin: 'round',
-                weight: 2.0,
+                weight: 1.2,
                 fill: true,
-                fillOpacity: 0.18,
-                fillColor: 'rgba(255,170,0,1.0)',
+                fillOpacity: 1,
+                fillColor: isTalhaoGrupoVerde(nomeTalhao) ? '#43d13f' : '#e57c2b',
+                fillPattern: isTalhaoGrupoVerde(nomeTalhao) ? talhaoPatternVerde : talhaoPatternLaranja,
                 interactive: false,
             }
         }
         map.createPane('pane_Talhoes');
-        map.getPane('pane_Talhoes').style.zIndex = 428;
+        map.getPane('pane_Talhoes').style.zIndex = 419;
         map.getPane('pane_Talhoes').style['mix-blend-mode'] = 'normal';
         var layer_Talhoes = new L.geoJson(json_Talhoes, {
             attribution: '',
@@ -2745,8 +2946,22 @@ function pop_Talhoes(feature, layer) {
             style: style_Talhoes_0,
         });
         bounds_group.addLayer(layer_Talhoes);
+        layer_Talhoes.on('add', function(){
+            if (!map.hasLayer(talhoesLabelsLayer)) {
+                map.addLayer(talhoesLabelsLayer);
+            }
+            updateTalhoesLabelsPositions();
+        });
+        layer_Talhoes.on('remove', function(){
+            if (map.hasLayer(talhoesLabelsLayer)) {
+                map.removeLayer(talhoesLabelsLayer);
+            }
+        });
         map.addLayer(layer_LimitesdaPropriedade_27);
         map.addLayer(layer_Talhoes);
+        map.addLayer(talhoesLabelsLayer);
+        map.on('zoomend moveend', updateTalhoesLabelsPositions);
+        updateTalhoesLabelsPositions();
         var overlaysTree = [
             {label: '<img src="legend/LimitesdaPropriedade_27.png" /> Limites da Propriedade', layer: layer_LimitesdaPropriedade_27},
             {label: 'Uso do Solo', collapsed: true, selectAllCheckbox: true, children: [
