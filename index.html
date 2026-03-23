@@ -1849,8 +1849,11 @@ try{
     .note{ margin-top: 10px; padding:10px; background:#f7f7f7; border-left:4px solid #2d6a4f; }
     .sec-title{ font-size:16px; font-weight:700; margin:22px 0 10px 0; }
     .talhoes-table{ max-width: 520px; }
-    .talhoes-table th:nth-child(1), .talhoes-table td:nth-child(1){ width: 40%; }
-    .talhoes-table th:nth-child(2), .talhoes-table td:nth-child(2){ width: 60%; }
+    .talhoes-table th:nth-child(1), .talhoes-table td:nth-child(1){ width: 28%; }
+    .talhoes-table th:nth-child(2), .talhoes-table td:nth-child(2){ width: 24%; }
+    .talhoes-table th:nth-child(3), .talhoes-table td:nth-child(3){ width: 48%; }
+    .status.plantado{ color:#15803d; font-weight:700; }
+    .status.sem-plantio{ color:#dc2626; font-weight:700; }
 
         /* EcoMap tools (Etapa 2) */
         .ecomap-tools.leaflet-bar a{
@@ -2046,44 +2049,46 @@ try{
 
     <div class="sec-title">ÁREAS DOS TALHÕES</div>
     <div style="display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap;">
-        <table class="talhoes-table" style="min-width:450px;">
+                <table class="talhoes-table" style="min-width:560px;">
             <thead>
                 <tr>
                     <th>Talhão</th>
                     <th class="num">Área (ha)</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>T001</td><td class="num">3,532</td></tr>
-                <tr><td>T002</td><td class="num">3,032</td></tr>
-                <tr><td>T003</td><td class="num">4,431</td></tr>
-                <tr><td>T004</td><td class="num">0,207</td></tr>
-                <tr><td>T005</td><td class="num">11,104</td></tr>
-                <tr><td>T006</td><td class="num">3,501</td></tr>
-                <tr><td>T007</td><td class="num">9,512</td></tr>
-                <tr><td>T008</td><td class="num">16,620</td></tr>
-                <tr><td>T009</td><td class="num">6,021</td></tr>
-                <tr><td>T010</td><td class="num">12,074</td></tr>
-                <tr><td>T011</td><td class="num">20,283</td></tr>
-                <tr><td>T012</td><td class="num">10,511</td></tr>
-                <tr><td>T013</td><td class="num">7,347</td></tr>
-                <tr><td>T014</td><td class="num">7,220</td></tr>
-                <tr><td>T015</td><td class="num">39,793</td></tr>
-                <tr><td>T016</td><td class="num">11,173</td></tr>
-                <tr class="hl"><td>Total</td><td class="num">166,361</td></tr>
+                <tr><td>T001</td><td class="num">3,532</td><td class="status plantado">Plantado</td></tr>
+                <tr><td>T002</td><td class="num">3,032</td><td class="status plantado">Plantado</td></tr>
+                <tr><td>T003</td><td class="num">4,431</td><td class="status plantado">Plantado</td></tr>
+                <tr><td>T004</td><td class="num">0,207</td><td class="status plantado">Plantado</td></tr>
+                <tr><td>T005</td><td class="num">11,104</td><td class="status plantado">Plantado</td></tr>
+                <tr><td>T006</td><td class="num">3,501</td><td class="status plantado">Plantado</td></tr>
+                <tr><td>T007</td><td class="num">9,512</td><td class="status plantado">Plantado</td></tr>
+                <tr><td>T008</td><td class="num">16,620</td><td class="status plantado">Plantado</td></tr>
+                <tr><td>T009</td><td class="num">6,021</td><td class="status sem-plantio">Sem Plantio</td></tr>
+                <tr><td>T010</td><td class="num">12,074</td><td class="status sem-plantio">Sem Plantio</td></tr>
+                <tr><td>T011</td><td class="num">20,283</td><td class="status sem-plantio">Sem Plantio</td></tr>
+                <tr><td>T012</td><td class="num">10,511</td><td class="status sem-plantio">Sem Plantio</td></tr>
+                <tr><td>T013</td><td class="num">3,473</td><td class="status plantado">Plantado</td></tr>
+                <tr><td>T014</td><td class="num">7,220</td><td class="status sem-plantio">Sem Plantio</td></tr>
+                <tr><td>T015</td><td class="num">36,317</td><td class="status sem-plantio">Sem Plantio</td></tr>
+                <tr><td>T016</td><td class="num">11,173</td><td class="status sem-plantio">Sem Plantio</td></tr>
+                <tr><td>T017</td><td class="num">7,347</td><td class="status sem-plantio">Sem Plantio</td></tr>
+                <tr class="hl"><td>Total</td><td class="num">166,358</td><td></td></tr>
             </tbody>
         </table>
 
-        <table class="talhoes-table" style="width:280px;">
+                <table class="talhoes-table" style="width:320px;">
             <thead>
                 <tr>
                     <th colspan="2">RESUMO DE PLANTIO</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Plantados (T001 a T007)</td><td class="num">35,319</td></tr>
-                <tr><td>A plantar (T008 a T016)</td><td class="num">131,042</td></tr>
-                <tr class="hl"><td>Total</td><td class="num">166,361</td></tr>
+                <tr><td>Plantados (T001 a T001 a T008 e T013)</td><td class="num">55,412</td></tr>
+                <tr><td>Sem plantio (demais talhões)</td><td class="num">146,265</td></tr>
+                <tr class="hl"><td>Total</td><td class="num">166,358</td></tr>
             </tbody>
         </table>
     </div>
@@ -2714,8 +2719,9 @@ var talhoesLabelEntries = [];
                 'T004#1': { lng: 0.00000, lat: -0.00016 },
                 'T007#1': { lng: -0.00062, lat: 0.00002 },
                 'T008#1': { lng: -0.00072, lat: 0.00004 },
-                'T013#1': { lng: -0.00042, lat: 0.00000 },
-                'T013#2': { lng: -0.00030, lat: 0.00024 },
+                'T013#1': { lng: -0.00028, lat: 0.00002 },
+                'T017#1': { lng: -0.00042, lat: 0.00000 },
+                'T017#2': { lng: -0.00030, lat: 0.00024 },
                 'T014#1': { lng: -0.00028, lat: 0.00000 },
                 'T015#1': { lng: -0.00115, lat: 0.00002 },
                 'T016#1': { lng: -0.00042, lat: -0.00022 }
@@ -2854,9 +2860,10 @@ var talhoesLabelEntries = [];
             return match ? parseInt(match[1], 10) : NaN;
         }
 
-        function isTalhaoGrupoVerde(nome) {
-            var n = getTalhaoNumber(nome);
-            return !isNaN(n) && n >= 1 && n <= 7;
+        function isTalhaoPlantado(nome) {
+            if (nome === null || nome === undefined) return false;
+            var nomeNorm = String(nome).trim().toUpperCase();
+            return ['T001','T002','T003','T004','T005','T006','T007','T008','T013'].includes(nomeNorm);
         }
 
         function createTalhaoPattern(options) {
@@ -2876,7 +2883,7 @@ var talhoesLabelEntries = [];
                 stroke: false,
                 fill: true,
                 fillColor: options.background,
-                fillOpacity: 1
+                fillOpacity: options.backgroundOpacity !== undefined ? options.backgroundOpacity : 1
             }));
 
             pattern.addShape(new L.PatternRect({
@@ -2887,7 +2894,7 @@ var talhoesLabelEntries = [];
                 stroke: false,
                 fill: true,
                 fillColor: options.tree,
-                fillOpacity: 1
+                fillOpacity: options.treeOpacity !== undefined ? options.treeOpacity : 1
             }));
 
             pattern.addShape(new L.PatternPath({
@@ -2897,28 +2904,25 @@ var talhoesLabelEntries = [];
                 weight: options.outline ? 0.7 : 0,
                 fill: true,
                 fillColor: options.tree,
-                fillOpacity: 1
+                fillOpacity: options.treeOpacity !== undefined ? options.treeOpacity : 1
             }));
 
             pattern.addTo(map);
             return pattern;
         }
 
-        var talhaoPatternVerde = createTalhaoPattern({
+        var talhaoPatternPlantado = createTalhaoPattern({
             background: '#43d13f',
             tree: '#d4d66a',
-            outline: null
-        });
-
-        var talhaoPatternLaranja = createTalhaoPattern({
-            background: '#e57c2b',
-            tree: '#7bd05a',
-            outline: '#2f7f2f'
+            outline: null,
+            backgroundOpacity: 1,
+            treeOpacity: 1
         });
 
         function style_Talhoes_0(feature) {
             var nomeTalhao = feature && feature.properties ? feature.properties['Talhoes'] : null;
-            return {
+            var plantado = isTalhaoPlantado(nomeTalhao);
+            var style = {
                 pane: 'pane_Talhoes',
                 opacity: 1,
                 color: '#000000',
@@ -2927,11 +2931,19 @@ var talhoesLabelEntries = [];
                 lineJoin: 'round',
                 weight: 1.2,
                 fill: true,
-                fillOpacity: 1,
-                fillColor: isTalhaoGrupoVerde(nomeTalhao) ? '#43d13f' : '#e57c2b',
-                fillPattern: isTalhaoGrupoVerde(nomeTalhao) ? talhaoPatternVerde : talhaoPatternLaranja,
-                interactive: false,
+                interactive: false
+            };
+
+            if (plantado) {
+                style.fillOpacity = 1;
+                style.fillColor = '#43d13f';
+                style.fillPattern = talhaoPatternPlantado;
+            } else {
+                style.fillOpacity = 0.30;
+                style.fillColor = '#e57c2b';
             }
+
+            return style;
         }
         map.createPane('pane_Talhoes');
         map.getPane('pane_Talhoes').style.zIndex = 419;
@@ -2973,7 +2985,7 @@ var talhoesLabelEntries = [];
                 {label: '<img src="legend/RemanescentedeVegetaoNativa_21.png" /> Remanescente de Vegetação Nativa', layer: layer_RemanescentedeVegetaoNativa_21},
                 {label: '<img src="legend/LinhadeTransmisso_20.png" /> Linha de Transmissão', layer: layer_LinhadeTransmisso_20}
             ]},
-            {label: '<span style="display:inline-block;width:12px;height:12px;background:rgba(255,170,0,0.18);border:2px solid rgba(255,170,0,1.0);box-sizing:border-box;vertical-align:middle;margin-right:4px;"></span> Talhões', layer: layer_Talhoes},
+            {label: '<span style="display:inline-block;width:12px;height:12px;background:rgba(255,170,0,0.18);border:2px solid rgba(255,170,0,1.0);box-sizing:border-box;vertical-align:middle;margin-right:4px;"></span> Talhões (verde = plantado | laranja = sem plantio)', layer: layer_Talhoes},
             {label: '<b>Ortomosaico</b>', collapsed: true, selectAllCheckbox: true, children: [
                 {label: "orto-3-1", layer: layer_orto31_19},
                 {label: "orto-3-0", layer: layer_orto30_18},
